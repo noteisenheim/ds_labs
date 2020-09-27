@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    image: noteisenheim/frog-website:v1
+    volumes:
+      - ./templates/:/app/templates/
+      - ./static:/app/static
+    ports:
+      - "5000:5000"
+
+  nginx:
+    image: "nginx:alpine"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./static:/app/static
+      - ./dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
+      - /docker-volumes/etc/letsencrypt/live/nofrogs.ga/fullchain.pem:/etc/letsencrypt/live/nofrogs.ga/fullchain.pem
+      - /docker-volumes/etc/letsencrypt/live/nofrogs.ga/privkey.pem:/etc/letsencrypt/live/nofrogs.ga/privkey.pem
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"

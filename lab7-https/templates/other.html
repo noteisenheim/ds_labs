@@ -1,0 +1,7 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h1>we have nothing to do about frogs</h1>
+<a href="{{ url_for('index') }}">main</a>
+<a href="{{ url_for('static', filename='frog_cartoon.jpg') }}">nice image is here</a>
+{% endblock %}

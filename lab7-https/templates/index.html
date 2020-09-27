@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>no frogs</title>
+    </head>
+
+    <body>
+        {% block content %}
+        <h1>no frogs here</h1>
+        <img src="../static/no_frog.png">
+        <h2>only ds lab 7 page</h2>
+
+        <br>
+
+        <h3>that is what I have inside nginx.conf file</h3>
+
+        <img src="../static/nginxconf.png">
+
+        <br>
+        <h3> and that is the dns records configurations</h3>
+
+        <img src="../static/dns.png">
+        
+        <br>
+        
+        <a href="{{url_for('other')}}">welcome to some other page</a>
+        {% endblock %}
+    </body>
+
+</html>
