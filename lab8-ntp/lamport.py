@@ -3,22 +3,26 @@ from datetime import datetime
 
 
 def local_time(counter):
+    # print current state
     return ' (LAMPORT_TIME={}, LOCAL_TIME={})'.format(counter, datetime.now())
 
 
 def calc_recv_timestamp(recv_time_stamp, counter):
+    # update on receive
     for i in range(len(counter)):
         counter[i] = max(recv_time_stamp[i], counter[i]) + 1
     return counter
 
 
 def event(pid, counter):
+    # update on some event
     counter[pid] += 1
     print('smth happened in {}'.format(pid) + local_time(counter))
     return counter
 
 
 def send_message(pipe, pid, counter):
+    # send message and counter
     counter[pid] += 1
     pipe.send(('empty shell', counter))
     print('message sent from ' + str(pid) + local_time(counter))
@@ -26,6 +30,7 @@ def send_message(pipe, pid, counter):
 
 
 def recv_message(pipe, pid, counter):
+    # receive message and update counters
     print("here")
     message, timestamp = pipe.recv()
     print("received")
@@ -35,6 +40,7 @@ def recv_message(pipe, pid, counter):
 
 
 if __name__ == '__main__':
+    # create pipes
     pipe_ab, pipe_ba = Pipe()
     pipe_bc, pipe_cb = Pipe()
 
@@ -42,6 +48,7 @@ if __name__ == '__main__':
     # pid b = 1
     # pid c = 2
 
+    # define counters
     counter_a = [0, 0, 0]
     counter_b = [0, 0, 0]
     counter_c = [0, 0, 0]
